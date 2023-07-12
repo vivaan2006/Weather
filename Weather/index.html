@@ -6,6 +6,197 @@
   <title>Weather App</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap">
   <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      background-color: #f5f5f5;
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 20px;
+      box-sizing: border-box;
+      text-align: center;
+    }
+
+    .app-title {
+      margin-bottom: 20px;
+    }
+
+    .app-title h1 {
+      font-size: 32px;
+      font-weight: 700;
+      color: #333;
+    }
+
+    .notification {
+      margin-bottom: 20px;
+      display: none;
+    }
+
+    .error-message {
+      font-size: 14px;
+      font-weight: 400;
+      color: #ff4c4c;
+    }
+
+    .weather-info {
+      margin-bottom: 20px;
+    }
+
+    .weather-icon img {
+      max-width: 100px;
+      height: auto;
+    }
+
+    .temperature-value h2 {
+      font-size: 64px;
+      font-weight: 700;
+      color: #333;
+      margin: 0;
+      display: inline-block;
+    }
+
+    .unit {
+      font-size: 24px;
+      font-weight: 400;
+    }
+
+    .temperature-description p {
+      font-size: 18px;
+      font-weight: 400;
+      color: #666;
+      margin: 0;
+    }
+
+    .location h3 {
+      font-size: 24px;
+      font-weight: 700;
+      color: #333;
+      margin: 0;
+    }
+
+    .toggle-unit {
+      margin-bottom: 20px;
+    }
+
+    .toggle-unit label {
+      position: relative;
+      display: inline-block;
+      width: 60px;
+      height: 34px;
+    }
+
+    .toggle-unit input {
+      display: none;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      transition: 0.4s;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 26px;
+      width: 26px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      transition: 0.4s;
+    }
+
+    input:checked + .slider {
+      background-color: #2196F3;
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(26px);
+    }
+
+    .unit-label {
+      font-size: 14px;
+      font-weight: 400;
+      color: #666;
+      margin-left: 10px;
+    }
+
+    .search-container {
+      margin-bottom: 20px;
+    }
+
+    .search-container input[type="text"] {
+      width: 70%;
+      padding: 10px;
+      font-size: 14px;
+      font-weight: 400;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    .search-container button {
+      width: 28%;
+      padding: 10px;
+      font-size: 14px;
+      font-weight: 700;
+      color: white;
+      background-color: #2196F3;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .forecast-heading {
+      font-size: 24px;
+      font-weight: 700;
+      color: #333;
+      margin-bottom: 10px;
+    }
+
+    .forecast-list {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    .forecast-item {
+      flex-basis: calc(33.33% - 10px);
+      margin-bottom: 10px;
+      padding: 10px;
+      background-color: #fff;
+      border-radius: 4px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    .forecast-date {
+      font-size: 16px;
+      font-weight: 700;
+      color: #333;
+      margin-bottom: 5px;
+    }
+
+    .forecast-icon {
+      margin-bottom: 5px;
+    }
+
+    .forecast-temperature {
+      font-size: 16px;
+      font-weight: 400;
+      color: #666;
+      margin: 0;
+    }
+  </style>
 </head>
 
 <body>

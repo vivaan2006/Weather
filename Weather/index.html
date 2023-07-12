@@ -1,36 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Weather App</title>
-    <link rel="stylesheet" href="font/Rimouski.css">
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <title>Weather App</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap">
+  <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-    
-    <div class="container">
-        <div class="app-title">
-            <p>Weather</p>
-        </div>
-        <div class="notification"> </div>
-        <div class="weather-container">
-            <div class="weather-icon">
-                <img src="icons/unknown.png" alt="">
-            </div>
-            <div class="temperature-value">
-                <p>- °<span>C</span></p>
-            </div>
-            <div class="temperature-description">
-                <p> - </p>
-            </div>
-            <div class="location">
-                <p>-</p>
-            </div>
-        </div>
+  <div class="container">
+    <div class="app-title">
+      <h1>Weather</h1>
     </div>
-    
-    <script src="app.js"></script>
+    <div class="notification">
+      <p class="error-message"></p>
+    </div>
+    <div class="weather-container">
+      <div class="weather-info">
+        <div class="weather-icon">
+          <img src="" alt="">
+        </div>
+        <div class="temperature-value">
+          <h2>-<span class="unit">°C</span></h2>
+        </div>
+        <div class="temperature-description">
+          <p>-</p>
+        </div>
+      </div>
+      <div class="location">
+        <h3>-</h3>
+      </div>
+    </div>
+    <div class="toggle-unit">
+      <label class="switch">
+        <input type="checkbox">
+        <span class="slider round"></span>
+      </label>
+      <span class="unit-label">°C / °F</span>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
 </body>
+
 </html>
-
-

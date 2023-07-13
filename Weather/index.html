@@ -27,9 +27,10 @@
     }
 
     .app-title h1 {
-      font-size: 32px;
+      font-size: 36px;
       font-weight: 700;
       color: #333;
+      margin: 0;
     }
 
     .notification {
@@ -41,15 +42,20 @@
       font-size: 14px;
       font-weight: 400;
       color: #ff4c4c;
+      margin: 0;
     }
 
-    .weather-info {
+    .weather-container {
       margin-bottom: 20px;
     }
 
     .weather-icon img {
-      max-width: 100px;
+      width: 150px;
       height: auto;
+    }
+
+    .temperature-value {
+      margin-top: 10px;
     }
 
     .temperature-value h2 {
@@ -58,6 +64,8 @@
       color: #333;
       margin: 0;
       display: inline-block;
+      transition: color 0.3s;
+      cursor: pointer;
     }
 
     .unit {
@@ -80,6 +88,9 @@
     }
 
     .toggle-unit {
+      display: flex;
+      align-items: center;
+      justify-content: center;
       margin-bottom: 20px;
     }
 
@@ -103,6 +114,7 @@
       bottom: 0;
       background-color: #ccc;
       transition: 0.4s;
+      border-radius: 34px;
     }
 
     .slider:before {
@@ -114,6 +126,7 @@
       bottom: 4px;
       background-color: white;
       transition: 0.4s;
+      border-radius: 50%;
     }
 
     input:checked + .slider {
@@ -156,11 +169,16 @@
       cursor: pointer;
     }
 
+    .forecast-container {
+      margin-bottom: 40px;
+      text-align: center;
+    }
+
     .forecast-heading {
       font-size: 24px;
       font-weight: 700;
       color: #333;
-      margin-bottom: 10px;
+      margin-bottom: 20px;
     }
 
     .forecast-list {
@@ -186,8 +204,9 @@
       margin-bottom: 5px;
     }
 
-    .forecast-icon {
-      margin-bottom: 5px;
+    .forecast-icon img {
+      width: 50px;
+      height: 50px;
     }
 
     .forecast-temperature {
@@ -202,7 +221,7 @@
 <body>
   <div class="container">
     <div class="app-title">
-      <h1>Weather</h1>
+      <h1>Weather App</h1>
     </div>
     <div class="notification">
       <p class="error-message"></p>
@@ -210,7 +229,7 @@
     <div class="weather-container">
       <div class="weather-info">
         <div class="weather-icon">
-          <img src="" alt="">
+          <img src="" alt="Weather Icon">
         </div>
         <div class="temperature-value">
           <h2>-<span class="unit">°C</span></h2>

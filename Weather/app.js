@@ -8,6 +8,8 @@ const toggleUnitElement = document.querySelector(".toggle-unit input");
 const searchInputElement = document.getElementById("search-input");
 const searchButtonElement = document.getElementById("search-button");
 const forecastListElement = document.querySelector(".forecast-list");
+const bodyElement = document.querySelector("body");
+const modeToggleElement = document.getElementById("mode-toggle");
 
 const weather = {};
 
@@ -21,6 +23,7 @@ const key = "82005d27a116c2880c8f0fcb866998a0";
 function displayError(message) {
   notificationElement.style.display = "block";
   notificationElement.innerHTML = `<p class="error-message">${message}</p>`;
+  notificationElement.classList.add("fade-in");
 }
 
 function toggleUnit() {
@@ -85,44 +88,42 @@ function setWeatherData(data) {
 }
 
 function getWeatherByCoordinates(latitude, longitude) {
-    const api = `http://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${key}`;
-  
-    fetch(api)
-      .then((response) => response.json())
-      .then((data) => {
-        setWeatherData(data);
-      })
-      .then(() => {
-        displayWeather();
-        getForecastByCoordinates(latitude, longitude); // Update the forecast after setting the weather data
-      })
-      .catch((error) => {
-        displayError(error.message);
-      });
-  }
-  
-  function getWeatherByCity(city) {
-    const api = `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${key}`;
-  
-    let data; // Declare the data variable outside the fetch call
-  
-    fetch(api)
-      .then((response) => response.json())
-      .then((responseData) => {
-        data = responseData; // Assign the response data to the data variable
-        setWeatherData(data);
-      })
-      .then(() => {
-        displayWeather();
-        const { lat, lon } = data.coord; // Access the data variable to extract latitude and longitude
-        getForecastByCoordinates(lat, lon); // Update the forecast using the coordinates
-      })
-      .catch((error) => {
-        displayError(error.message);
-      });
-  }
-  
-  
+  const api = `http://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${key}`;
+
+  fetch(api)
+    .then((response) => response.json())
+    .then((data) => {
+      setWeatherData(data);
+    })
+    .then(() => {
+      displayWeather();
+      getForecastByCoordinates(latitude, longitude); // Update the forecast after setting the weather data
+    })
+    .catch((error) => {
+      displayError(error.message);
+    });
+}
+
+function getWeatherByCity(city) {
+  const api = `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${key}`;
+
+  let data; // Declare the data variable outside the fetch call
+
+  fetch(api)
+    .then((response) => response.json())
+    .then((responseData) => {
+      data = responseData; // Assign the response data to the data variable
+      setWeatherData(data);
+    })
+    .then(() => {
+      displayWeather();
+      const { lat, lon } = data.coord; // Access the data variable to extract latitude and longitude
+      getForecastByCoordinates(lat, lon); // Update the forecast using the coordinates
+    })
+    .catch((error) => {
+      displayError(error.message);
+    });
+}
 
 function getForecastByCoordinates(latitude, longitude) {
   const api = `http://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${key}`;
@@ -141,7 +142,7 @@ function displayForecast(forecastData) {
   forecastListElement.innerHTML = "";
   for (let i = 0; i < forecastData.length; i += 8) {
     const forecast = forecastData[i];
-    const forecastItem = createForecastItem(forecast);
+    const forecastItem = createForecastItem(forecast, i / 8);
     forecastListElement.appendChild(forecastItem);
   }
 }
@@ -155,41 +156,42 @@ function updateForecastTemperature() {
   });
 }
 
-function createForecastItem(forecast) {
-    const forecastItem = document.createElement("div");
-    forecastItem.classList.add("forecast-item");
-  
-    const date = new Date(forecast.dt * 1000);
-    const dayOfWeek = date.toLocaleDateString("en-US", { weekday: "short" });
-  
-    const dateElement = document.createElement("h3");
-    dateElement.classList.add("forecast-date");
-    dateElement.textContent = dayOfWeek;
-  
-    const iconElement = document.createElement("img");
-    iconElement.classList.add("forecast-icon");
-    iconElement.src = `icons/${forecast.weather[0].icon}.png`;
-    iconElement.alt = forecast.weather[0].description;
-  
-    const tempElement = document.createElement("p");
-    tempElement.classList.add("forecast-temperature");
-    tempElement.dataset.temperature = Math.round(forecast.main.temp - 273);
-  
-    forecastItem.appendChild(dateElement);
-    forecastItem.appendChild(iconElement);
-    forecastItem.appendChild(tempElement);
-  
-    return forecastItem;
-  }
-  
-  function updateForecastTemperature() {
-    const forecastTemperatureElements = document.querySelectorAll(".forecast-temperature");
-    forecastTemperatureElements.forEach((element) => {
-      const currentTemperature = element.dataset.temperature;
-      const convertedTemperature = convertTemperature(parseInt(currentTemperature));
-      element.innerHTML = `${convertedTemperature}°${getUnitSymbol()}`;
-    });
-  }  
+function createForecastItem(forecast, index) {
+  const forecastItem = document.createElement("div");
+  forecastItem.classList.add("forecast-item");
+  forecastItem.style.animationDelay = `${500 + index * 100}ms`;
+
+  const date = new Date(forecast.dt * 1000);
+  const dayOfWeek = date.toLocaleDateString("en-US", { weekday: "short" });
+
+  const dateElement = document.createElement("h3");
+  dateElement.classList.add("forecast-date");
+  dateElement.textContent = dayOfWeek;
+
+  const iconElement = document.createElement("img");
+  iconElement.classList.add("forecast-icon");
+  iconElement.src = `icons/${forecast.weather[0].icon}.png`;
+  iconElement.alt = forecast.weather[0].description;
+
+  const tempElement = document.createElement("p");
+  tempElement.classList.add("forecast-temperature");
+  tempElement.dataset.temperature = Math.round(forecast.main.temp - 273);
+
+  forecastItem.appendChild(dateElement);
+  forecastItem.appendChild(iconElement);
+  forecastItem.appendChild(tempElement);
+
+  return forecastItem;
+}
+
+function updateForecastTemperature() {
+  const forecastTemperatureElements = document.querySelectorAll(".forecast-temperature");
+  forecastTemperatureElements.forEach((element) => {
+    const currentTemperature = element.dataset.temperature;
+    const convertedTemperature = convertTemperature(parseInt(currentTemperature));
+    element.innerHTML = `${convertedTemperature}°${getUnitSymbol()}`;
+  });
+}
 
 function setCurrentLocationWeather() {
   if ("geolocation" in navigator) {
@@ -220,3 +222,10 @@ toggleUnitElement.addEventListener("click", removeAnimationClasses);
 searchButtonElement.addEventListener("click", searchLocationWeather);
 
 setCurrentLocationWeather();
+
+// Light and Dark Mode
+function toggleMode() {
+  bodyElement.classList.toggle("dark-mode");
+}
+
+modeToggleElement.addEventListener("click", toggleMode);

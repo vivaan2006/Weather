@@ -97,7 +97,7 @@ function getWeatherByCoordinates(latitude, longitude) {
     })
     .then(() => {
       displayWeather();
-      getForecastByCoordinates(latitude, longitude); // Update the forecast after setting the weather data
+      getForecastByCoordinates(latitude, longitude); 
     })
     .catch((error) => {
       displayError(error.message);
@@ -107,18 +107,18 @@ function getWeatherByCoordinates(latitude, longitude) {
 function getWeatherByCity(city) {
   const api = `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${key}`;
 
-  let data; // Declare the data variable outside the fetch call
+  let data; 
 
   fetch(api)
     .then((response) => response.json())
     .then((responseData) => {
-      data = responseData; // Assign the response data to the data variable
+      data = responseData; 
       setWeatherData(data);
     })
     .then(() => {
       displayWeather();
-      const { lat, lon } = data.coord; // Access the data variable to extract latitude and longitude
-      getForecastByCoordinates(lat, lon); // Update the forecast using the coordinates
+      const { lat, lon } = data.coord; 
+      getForecastByCoordinates(lat, lon);
     })
     .catch((error) => {
       displayError(error.message);
